@@ -118,8 +118,9 @@ static bool GenerateBlock(ChainstateManager& chainman, CBlock& block, uint64_t& 
 {
     block_hash.SetNull();
     block.hashMerkleRoot = BlockMerkleRoot(block);
-
-    while (max_tries > 0 && block.nNonce < std::numeric_limits<uint32_t>::max() && !CheckProofOfWork(block.GetHash(), block.nBits, chainman.GetConsensus()) && !ShutdownRequested()) {
+    uint256 maxHash;
+    maxHash.SetHex("0");
+    while (max_tries > 0 && block.nNonce < std::numeric_limits<uint32_t>::max() && !CheckProofOfWork(block.GetHash(), maxHash, block.nBits, chainman.GetConsensus(), block) && !ShutdownRequested()) {
         ++block.nNonce;
         --max_tries;
     }

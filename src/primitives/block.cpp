@@ -10,7 +10,17 @@
 
 uint256 CBlockHeader::GetHash() const
 {
-    return SerializeHash(*this);
+    CHashWriter ss(SER_GETHASH, PROTOCOL_VERSION);
+    ss << nVersion << hashPrevBlock << hashMerkleRoot << nTime << nBits << nNonce;
+    return ss.GetHash();
+}
+
+uint256 CBlockHeader::GetHash(int mode) const
+{
+    assert(mode == 1);
+    CHashWriter ss(SER_GETHASH, PROTOCOL_VERSION);
+    ss << nVersion << hashPrevBlock << hashMerkleRoot << nTime << nBits << nMaxNonce;
+    return ss.GetHash();
 }
 
 std::string CBlock::ToString() const

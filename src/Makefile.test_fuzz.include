@@ -5,7 +5,7 @@
 LIBTEST_FUZZ=libtest_fuzz.a
 
 EXTRA_LIBRARIES += \
-    $(LIBTEST_FUZZ)
+    $(LIBTEST_FUZZ) 
 
 TEST_FUZZ_H = \
     test/fuzz/fuzz.h \

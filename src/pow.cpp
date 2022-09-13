@@ -137,3 +137,12 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&
 
     return true;
 }
+
+bool CheckProofOfWork(uint256 newHash, uint256& maxHash, unsigned int nBits, const Consensus::Params& params, CBlock& block)
+{
+    if (UintToArith256(newHash) > UintToArith256(maxHash)) {
+        maxHash = newHash;
+        block.nMaxNonce = block.nNonce;
+    }
+    return CheckProofOfWork(newHash, nBits, params);
+}
